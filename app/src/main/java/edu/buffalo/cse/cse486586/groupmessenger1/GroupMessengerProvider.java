@@ -2,9 +2,16 @@ package edu.buffalo.cse.cse486586.groupmessenger1;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.net.Uri;
 import android.util.Log;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 
 /**
  * GroupMessengerProvider is a key-value table. Once again, please note that we do not implement
@@ -40,6 +47,27 @@ public class GroupMessengerProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
+
+        //ContentValues keyValueToInsert = new ContentValues () ;
+          Log.d("VALUES",values.toString());
+//          for(String i:values.keySet()){
+//              Log.d("key",i);
+//              Log.d("value", (String) values.get(i));
+//          }
+       String filename = (String)values.get("key");
+        String string = (String)values.get("value") + "\n";
+        FileOutputStream outputStream;
+
+        try {
+            outputStream = getContext().openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream.write(string.getBytes());
+            outputStream.close();
+            Log.d("insert_method","File write successful");
+        } catch (Exception e) {
+            Log.e("insert_method", "File write failed");
+        }
+
+
         /*
          * TODO: You need to implement this method. Note that values will have two columns (a key
          * column and a value column) and one row that contains the actual (key, value) pair to be
@@ -50,7 +78,7 @@ public class GroupMessengerProvider extends ContentProvider {
          * internal storage option that we used in PA1. If you want to use that option, please
          * take a look at the code for PA1.
          */
-        Log.v("insert", values.toString());
+        Log.v("insert1", values.toString());
         return uri;
     }
 
@@ -69,6 +97,32 @@ public class GroupMessengerProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
+
+        StringBuilder sb = null;
+        try {
+
+            FileInputStream input = getContext().openFileInput(selection);
+            InputStreamReader input_reader = new InputStreamReader(input);
+            BufferedReader br = new BufferedReader(input_reader);
+            sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+
+            }
+            //Log.d("Cursor", sb.toString());
+            //Log.d("Cursor", "File_reading_successful");
+        } catch (Exception e) {
+            //Log.d("Cursor", "File_reading_failed");
+        }
+
+        String[] matrixColumns = {"key", "value"};
+        MatrixCursor mco = new MatrixCursor(matrixColumns);
+        mco.addRow(new Object[]{selection, sb});
+        mco.close();
+        Log.d("cursor", "added row");
+
+
         /*
          * TODO: You need to implement this method. Note that you need to return a Cursor object
          * with the right format. If the formatting is not correct, then it is not going to work.
@@ -80,7 +134,8 @@ public class GroupMessengerProvider extends ContentProvider {
          * recommend building a MatrixCursor described at:
          * http://developer.android.com/reference/android/database/MatrixCursor.html
          */
+
         Log.v("query", selection);
-        return null;
+        return mco;
     }
 }

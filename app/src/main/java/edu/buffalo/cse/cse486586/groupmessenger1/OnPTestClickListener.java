@@ -65,6 +65,7 @@ public class OnPTestClickListener implements OnClickListener {
         for (int i = 0; i < TEST_CNT; i++) {
             cv[i] = new ContentValues();
             cv[i].put(KEY_FIELD, "key" + Integer.toString(i));
+           // Log.d("init","key" + Integer.toString(i));
             cv[i].put(VALUE_FIELD, "val" + Integer.toString(i));
         }
 
@@ -95,6 +96,7 @@ public class OnPTestClickListener implements OnClickListener {
     private boolean testInsert() {
         try {
             for (int i = 0; i < TEST_CNT; i++) {
+
                 mContentResolver.insert(mUri, mContentValues[i]);
             }
         } catch (Exception e) {

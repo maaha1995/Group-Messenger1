@@ -5,13 +5,13 @@
     tools:context=".GroupMessengerActivity" >
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:hint="@string/edittext_hint"
-        android:maxLines="5" >
+        android:maxLines="5">
 
         <requestFocus />
     </EditText>
@@ -37,7 +37,7 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText1"
+        android:layout_above="@+id/edit_text"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/button1"
@@ -46,4 +46,35 @@
         android:maxLines="15"
         android:scrollbars="vertical" />
 
+    <!--<LinearLayout-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:background="#FFFFFF"-->
+        <!--android:layout_weight="1.00" >-->
+        <!--<TextView-->
+            <!--android:id="@+id/local_text_display"-->
+            <!--android:textColor="#0000AA"-->
+            <!--android:fadeScrollbars="true"-->
+            <!--android:layout_width="160dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:maxLines="18"-->
+            <!--android:textIsSelectable="true"-->
+            <!--android:orientation="horizontal" />-->
+        <!--<TextView-->
+            <!--android:id="@+id/remote_text_display"-->
+            <!--android:textColor="#AA0000"-->
+            <!--android:gravity="right"-->
+            <!--android:layout_width="160dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:maxLines="18"-->
+            <!--android:textIsSelectable="true"-->
+            <!--android:orientation="horizontal" />-->
+    <!--</LinearLayout>-->
+
+
+
 </RelativeLayout>
+
+
+
