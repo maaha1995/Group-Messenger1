@@ -153,10 +153,7 @@ public class GroupMessengerActivity extends Activity {
                     getContentResolver () . insert ( mUri ,
                             contentValues1 ) ;
 
-
-
-
-                    Log.d("Reached", "socket_close");
+                    
                 }
             }
             catch (IOException e) {
