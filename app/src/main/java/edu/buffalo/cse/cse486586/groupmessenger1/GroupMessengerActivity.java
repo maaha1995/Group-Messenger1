@@ -63,7 +63,12 @@ public class GroupMessengerActivity extends Activity {
             return;
         }
 
+
         final EditText editText = (EditText) findViewById(R.id.edit_text);
+
+        TextView tv = (TextView) findViewById(R.id.textView1);
+        findViewById(R.id.button1).setOnClickListener(
+                new OnPTestClickListener(tv, getContentResolver()));
 
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -71,20 +76,8 @@ public class GroupMessengerActivity extends Activity {
 
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
-
                     String msg = editText.getText().toString() + "\n";
                     editText.setText("");// This is one way to reset the input box.
-                    TextView tv = (TextView) findViewById(R.id.textView1);
-
-                    tv.setMovementMethod(new ScrollingMovementMethod());
-                    tv.append("\t"+msg);
-                    tv.append("\n");
-                    Log.d(TAG,msg);
-
-                     findViewById(R.id.button1).setOnClickListener(
-                          new OnPTestClickListener(tv, getContentResolver()));
-
-
                     new ClientTask().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, msg, myPort);
                     return true;
                 }
@@ -98,16 +91,6 @@ public class GroupMessengerActivity extends Activity {
             public void onClick(View v) {
                 String msg = editText.getText().toString() + "\n";
                 editText.setText("");// This is one way to reset the input box.
-                TextView tv = (TextView) findViewById(R.id.textView1);
-
-                tv.setMovementMethod(new ScrollingMovementMethod());
-                tv.append("\t"+msg);
-                tv.append("\n");
-
-
-                findViewById(R.id.button1).setOnClickListener(
-                        new OnPTestClickListener(tv, getContentResolver()));
-
                 new ClientTask().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, msg, myPort);
                 Log.d("SetOnclickListener","Successful");
 
@@ -152,8 +135,6 @@ public class GroupMessengerActivity extends Activity {
 
                     getContentResolver () . insert ( mUri ,
                             contentValues1 ) ;
-
-                    
                 }
             }
             catch (IOException e) {
@@ -172,18 +153,6 @@ public class GroupMessengerActivity extends Activity {
             tv.append("\t\n"+strReceived);
             tv.append("\n");
             Log.d("Displayed", "DisplayedMessage");
-
-            String filename = "SimpleMessengerOutput";
-            String string = strReceived + "\n";
-            FileOutputStream outputStream;
-
-            try {
-                outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-                outputStream.write(string.getBytes());
-                outputStream.close();
-            } catch (Exception e) {
-                Log.e(TAG, "File write failed");
-            }
 
             return;
         }
@@ -213,8 +182,6 @@ public class GroupMessengerActivity extends Activity {
                     out.flush();
                     out.close();
                     socket.close();
-
-
                 }
 
             } catch(UnknownHostException e){
